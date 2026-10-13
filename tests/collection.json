@@ -1,0 +1,168 @@
+{
+  "info": {
+    "name": "QA API Portfolio - Newman",
+    "description": "Public portfolio collection focused on API test automation with Postman/Newman. Uses JSONPlaceholder and contains no credentials or private environment data.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://jsonplaceholder.typicode.com"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET - Single post",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Response is JSON', () => pm.response.to.be.json);",
+              "const body = pm.response.json();",
+              "pm.test('Post has expected contract', () => {",
+              "  pm.expect(body).to.have.all.keys('userId', 'id', 'title', 'body');",
+              "  pm.expect(body.id).to.eql(1);",
+              "  pm.expect(body.title).to.be.a('string').and.not.empty;",
+              "});",
+              "pm.test('Response time is under 2000 ms', () => pm.expect(pm.response.responseTime).to.be.below(2000));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET - Filter posts by user",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts?userId=1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ],
+          "query": [
+            {
+              "key": "userId",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Response is a non-empty array', () => {",
+              "  pm.expect(body).to.be.an('array').that.is.not.empty;",
+              "});",
+              "pm.test('Every item belongs to user 1', () => {",
+              "  body.forEach(item => pm.expect(item.userId).to.eql(1));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST - Create post",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"QA portfolio\",\n  \"body\": \"API automation with Newman\",\n  \"userId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 201', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "pm.test('Created resource echoes submitted data', () => {",
+              "  pm.expect(body.title).to.eql('QA portfolio');",
+              "  pm.expect(body.body).to.eql('API automation with Newman');",
+              "  pm.expect(body.userId).to.eql(1);",
+              "  pm.expect(body.id).to.exist;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET - Non-existing post",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts/999999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "999999"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404', () => pm.response.to.have.status(404));",
+              "pm.test('Error response body is an object', () => pm.expect(pm.response.json()).to.be.an('object'));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "qa-api-newman-ci",
+  "version": "1.0.0",
+  "private": true,
+  "description": "QA portfolio - API test automation with Postman, Newman and GitHub Actions",
+  "scripts": {
+    "test": "newman run tests/collection.json --reporters cli,junit --reporter-junit-export reports/newman.xml"
+  },
+  "devDependencies": {
+    "newman": "^6.2.1"
+  }
+}
