@@ -1,30 +1,38 @@
-# API Testing with Newman & GitHub Actions
+# Testes de API com Newman & GitHub Actions
 
-Portfolio project demonstrating API test automation using **Postman collections**, **Newman** and **GitHub Actions**.
+Projeto de portfólio focado em **automação de testes de API REST** utilizando **Postman**, **Newman** e **GitHub Actions**.
 
-## What this project demonstrates
+## 🎯 Objetivo
 
-- Automated REST API validation with Postman/Newman
-- Positive and negative test scenarios
-- HTTP status, contract, payload and response-time assertions
-- Parameterized base URL using collection variables
-- Continuous testing on every push and pull request
-- JUnit report generation as a GitHub Actions artifact
+Demonstrar, de forma prática, conhecimentos de QA aplicados à automação de APIs, incluindo criação de cenários positivos e negativos, validações de contrato, payload, status HTTP e execução automatizada em pipeline de CI/CD.
 
-## Public API used
+## 🧪 O que este projeto demonstra
 
-The suite runs against **JSONPlaceholder**, a public fake REST API intended for examples and testing. No private credentials, customer data or corporate endpoints are required.
+- Automação de testes de API REST com Postman/Newman
+- Cenários positivos e negativos
+- Validação de status HTTP
+- Validação de estrutura e conteúdo da resposta
+- Validação de tempo de resposta
+- Uso de variáveis para configuração da API
+- Execução automática em `push` e `pull_request`
+- Geração de relatório JUnit no GitHub Actions
 
-## Test scenarios
+## 🌐 API utilizada
 
-| Scenario | Method | Expected result |
+Os testes utilizam a **JSONPlaceholder**, uma API pública destinada a exemplos e testes.
+
+Este projeto não utiliza credenciais privadas, dados reais de clientes ou endpoints corporativos.
+
+## ✅ Cenários automatizados
+
+| Cenário | Método | Resultado esperado |
 | --- | --- | --- |
-| Retrieve a single post | GET | 200 + response contract validation |
-| Filter posts by user | GET | 200 + non-empty list + user validation |
-| Create a post | POST | 201 + payload validation |
-| Request a non-existing post | GET | 404 |
+| Consultar um post existente | GET | HTTP 200 + validação do contrato |
+| Filtrar posts por usuário | GET | HTTP 200 + validação dos itens retornados |
+| Criar um post | POST | HTTP 201 + validação do payload |
+| Consultar um post inexistente | GET | HTTP 404 |
 
-## Project structure
+## 📁 Estrutura
 
 ```text
 .
@@ -38,21 +46,25 @@ The suite runs against **JSONPlaceholder**, a public fake REST API intended for 
 └── README.md
 ```
 
-## Run locally
+## ▶️ Executando localmente
+
+Pré-requisito: Node.js instalado.
 
 ```bash
 npm install
 npm test
 ```
 
-## CI/CD
+## 🔄 CI/CD
 
-The GitHub Actions workflow runs automatically on pushes and pull requests to `main`. It installs Node.js dependencies, executes the Newman collection and uploads a JUnit report.
+O workflow do GitHub Actions é executado automaticamente em alterações enviadas para a branch `main` e em pull requests. A pipeline instala as dependências, executa a collection com Newman e disponibiliza um relatório JUnit como artefato.
 
-## QA skills highlighted
+## 🛠️ Tecnologias e competências
 
-`API Testing` · `Postman` · `Newman` · `REST` · `JavaScript Assertions` · `GitHub Actions` · `CI/CD`
+`API Testing` · `Postman` · `Newman` · `REST API` · `JavaScript Assertions` · `GitHub Actions` · `CI/CD` · `Test Automation`
 
-## Portfolio note
+---
 
-This repository is a sanitized portfolio project. All examples use public test data and a public API.
+### English summary
+
+QA portfolio project demonstrating REST API test automation with Postman, Newman and GitHub Actions, including positive/negative scenarios, response assertions and continuous testing in CI/CD.
